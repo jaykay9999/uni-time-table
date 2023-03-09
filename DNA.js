@@ -25,13 +25,14 @@ var allProfessorNames = ["asma" ,"sami", "firas", "lamjed", "mohammed", "samira"
 // all courses are in the form : professor A teaches class B course C , amount of hours per week X
 
 
-var availableSlots = [21, 22, 23, 24, 25, 26, 27, 28, 31, 32, 33, 34, 35, 36, 37, 38, 41, 42, 43, 44, 45, 46, 47, 48, 51, 52, 53, 54,
-    55, 56, 57, 58, 61, 62, 63, 64, 65, 66, 67, 68]
+var availableSlots = [21, 22, 23, 24, 25, 26, 27, 28,29, 31, 32, 33, 34, 35, 36, 37, 38, 39, 41, 42, 43, 44, 45, 46, 47, 48,49, 51, 52, 53, 54,
+    55, 56, 57, 58,59, 61, 62, 63, 64, 65, 66, 67, 68,69]
 
+
+//this function will not be used anymore
 function newSession(oneCourse , professor) {
     
-    
-    var session = []
+    var session = [];
     var courseCredit = oneCourse[3]
     var profName= oneCourse[0]
     var className = oneCourse[1]
@@ -43,9 +44,79 @@ function newSession(oneCourse , professor) {
     if (courseCredit ==3 ){
         session = [profName , className , 1.5 , courseName , professor.getProfSlots()[slotIndex]]
     }
+    if (courseCredit ==2 ){
+        session = [profName , className , 1 , courseName , professor.getProfSlots()[slotIndex]]
+    }
+    if (courseCredit ==5 ){
+        session = [profName , className ,2 , courseName , professor.getProfSlots()[slotIndex]]
+    }
+    if (courseCredit ==1.5 ){
+        session = [profName , className , 0.75 , courseName , professor.getProfSlots()[slotIndex]]
+    }
+    if (courseCredit ==2.5 ){
+        session = [profName , className , 1.25 , courseName , professor.getProfSlots()[slotIndex]]
+    }
+    if (courseCredit ==1 ){
+        session = [profName , className , 0.5 , courseName , professor.getProfSlots()[slotIndex]]
+    }
+        return session;
+    }
 
-    return session;
-}
+// // for courses that should be divided on 1 session per week. example arts is 1 hour/week : 1 hours -> 1 session
+function new1Session(oneCourse , professor){
+    var session = [];
+    var courseCredit = oneCourse[3]
+    var profName= oneCourse[0]
+    var className = oneCourse[1]
+    var courseName = oneCourse[2]
+    var slotIndex = randomIntFromInterval(0, professor.getProfSlots().length -1)
+    
+        session = [profName , className , courseCredit , courseName , professor.getProfSlots()[slotIndex]]
+    
+        return session;
+    }
+
+// for courses that should be divided on 2 sessions per week. example geography is 4 hours/week : 2 hours + 2 hours-> 2 sessions
+function new2Session(oneCourse , professor){
+
+    var session = [];
+    var courseCredit = oneCourse[3]
+    var profName= oneCourse[0]
+    var className = oneCourse[1]
+    var courseName = oneCourse[2]
+    var slotIndex = randomIntFromInterval(0, professor.getProfSlots().length -1)
+    
+        if (courseCredit == 4 || courseCredit == 2 || courseCredit == 3){
+            session.push([profName , className , courseCredit/2 , courseName , professor.getProfSlots()[slotIndex]])
+            session.push([profName , className , courseCredit/2 , courseName , professor.getProfSlots()[slotIndex]])
+        }
+        if (courseCredit == 2.5){
+            session.push([profName , className , 1.5 , courseName , professor.getProfSlots()[slotIndex]])
+            session.push([profName , className , 1 , courseName , professor.getProfSlots()[slotIndex]])
+        }
+
+        return session;
+    }
+
+// for courses that should be divided on 3 sessions per week. example math is 5 hours/week : 2 hours + 2 hours + 1 hour -> 3 sessions
+function new3Session(oneCourse , professor){
+    let session = [];
+    let courseCredit = oneCourse[3]
+    let profName= oneCourse[0]
+    let className = oneCourse[1]
+    let courseName = oneCourse[2]
+    let slotIndex = randomIntFromInterval(0, professor.getProfSlots().length -1)
+    
+
+        session.push([profName , className , 2 , courseName , professor.getProfSlots()[slotIndex]])
+        session.push([profName , className , 2 , courseName , professor.getProfSlots()[slotIndex]])
+        session.push([profName , className , 1 , courseName , professor.getProfSlots()[slotIndex]])
+    
+        return session;
+    }
+
+
+
 
 function sortFunction(a, b) {
     if (a[4] === b[4]) {
@@ -64,13 +135,29 @@ class DNA{
     
         // Filling a timetable with sessions
         for (var i = 0; i < allCourses.length; i++) {
+
                 for(var j = 0 ; j < allProfessors.length ; j++){
+                    
                     if(allProfessors[j].getProfName() == allCourses[i][0]){
                         var professor = allProfessors[j]
                     }
                 }
-                this.genes.push(newSession(allCourses[i] , professor));
-                this.genes.push(newSession(allCourses[i] , professor));
+
+                if(allCourses[i][3] == 1 || allCourses[i][3] == 1.5){
+                    this.genes.push(new1Session(allCourses[i] , professor));
+                }
+                if(allCourses[i][3] == 2 || allCourses[i][3] == 2.5 || allCourses[i][3] == 3 || allCourses[i][3] == 4){ 
+                    let tmp = new2Session(allCourses[i] , professor);
+                    this.genes.push(tmp[0]);
+                    this.genes.push(tmp[1]);
+                }
+
+                if(allCourses[i][3] == 5){
+                    let tmp = new3Session(allCourses[i] , professor);
+                    this.genes.push(tmp[0]);
+                    this.genes.push(tmp[1]);
+                    this.genes.push(tmp[2]);
+                }
         }
         this.genes.sort(sortFunction);
         
@@ -128,7 +215,7 @@ class DNA{
     mutate(mutRate){
         for(var i=0; i<this.genes.length; i++){
             if(Math.random(1) < mutRate){
-                var slotIndex1 = randomIntFromInterval(21, 66)
+                var slotIndex1 = randomIntFromInterval(21, 68)
                 this.genes[i][4] =  slotIndex1  //availableSlots[slotIndex];
             }
         }

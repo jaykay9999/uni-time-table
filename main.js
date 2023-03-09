@@ -1,3 +1,35 @@
+const XLSX = require('xlsx');
+const fs = require('fs');
+
+// read Excel file as binary data
+const workbook = XLSX.read(fs.readFileSync('Genetic algorithm.xlsx'), { type: 'buffer' });
+
+// get the first worksheet
+const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+
+// convert worksheet data to an array of objects
+const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+// remove header row from data
+data.shift();
+
+console.log(data);
+
+function import_data(path){
+
+}
+
+function getUniqueNames(arr) {
+    const uniqueNames = new Set();
+    for (let i = 0; i < arr.length; i++) {
+      const name = arr[i][0];
+      uniqueNames.add(name);
+    }
+    return Array.from(uniqueNames);
+  }
+  
+
+
 //import DNA from './DNA';
 const { DNA} = require('./DNA');
 const { Population} = require('./Population');
@@ -6,13 +38,7 @@ const { Professor} = require('./Professor');
 var allProfessorNames = ["asma" ,"sami", "firas", "lamjed", "mohammed", "samira", "john", "dima", "kalixewi", "yassine",
                     "khadija", "ali", "karoui", "mark"]
 
-var all_professors = []
-for (var i = 0 ; i < allProfessorNames.length ; i++ ){
-    all_professors.push(new Professor(i , allProfessorNames[i]))
-}
 
-all_professors[6].remove_time([22 , 32 , 33 , 44, 45])
-console.log(all_professors[6].getProfSlots())
 
 var allCourses = [["asma" , "fresh1" , "math1",4], ["sami" , "fresh1" , "phy1",4], ["firas" , "fresh1" , "eng1",4],
             ["lamjed" , "fresh1" , "cs1",3], ["mohammed" , "fresh1" , "iss1",3], ["samira" , "fresh1" , "df1",3],
@@ -49,12 +75,33 @@ var allCourses = [["asma" , "fresh1" , "math1",4], ["sami" , "fresh1" , "phy1",4
         ]
 var target;
 var maxPop;
-var mutRate;
+var mutRate = 0.001;
 var finished = false;
 
 
-let population = new Population(allCourses, all_professors, 0 , 1000);
-for (let i = 0 ; i < 1000 ; i++){
+allCourses = data;
+
+allProfessorNames =  getUniqueNames(allCourses);
+
+console.log(allProfessorNames);
+
+var all_professors = []
+for (var i = 0 ; i < allProfessorNames.length ; i++ ){
+    all_professors.push(new Professor(i , allProfessorNames[i]))
+}
+
+
+
+all_professors[6].remove_time([22 , 32 , 33 , 44, 45])
+console.log(all_professors[6].getProfSlots())
+
+
+
+console.log(allCourses);
+
+
+let population = new Population(allCourses, all_professors, mutRate , 1000);
+for (let i = 0 ; i < 10000 ; i++){
     population.naturalSelection();
     population.generateGens(allCourses  , all_professors);
     population.calcMaxFitness();
@@ -66,16 +113,16 @@ for (var j = 0 ; j < population.population[999].genes.length ; j++){
 }
 console.log(population.generations)
 
-
 /*
-let dna1 = new DNA(allCourses)
+
+let dna1 = new DNA(allCourses ,all_professors)
 console.log("DNA 1------------------------------------------")
 for (var i = 0 ; i< dna1.genes.length ;i++){
     console.log(dna1.genes[i]);
 }
 console.log(dna1.checkFit());
 
-let dna2 = new DNA(allCourses)
+let dna2 = new DNA(allCourses ,all_professors)
 console.log("DNA 2 ----------------------------------------------------")
 for (var i = 0 ; i< dna2.genes.length ;i++){
     console.log(dna2.genes[i]);
@@ -83,13 +130,13 @@ for (var i = 0 ; i< dna2.genes.length ;i++){
 console.log(dna2.checkFit());
 
 
-dna3 = dna1.crossover(dna2 , allCourses)
+dna3 = dna1.crossover(dna2 , allCourses, all_professors)
 console.log("DNA 3 ----------------------------------------------------")
 for (var i = 0 ; i< dna3.genes.length ;i++){
     console.log(dna3.genes[i]);
 }
 console.log(dna3.checkFit());
-*/
 
+*/
 
 

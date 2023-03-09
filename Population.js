@@ -27,6 +27,7 @@ class Population{
             this.population[i] = new DNA(allCourses , allProfessors);
         }
 
+
     }
     
 
@@ -53,7 +54,7 @@ class Population{
         //for (var i = 0; i < this.population.length; i++) {
         //var fitness = map(this.population[i].fitness, 0, maxFit, 0, 1);
         //var n = floor(fitness * 100);
-        for (var j = 0; j < 100; j++) {
+        for (var j = 0; j < 40; j++) {
             this.matingPool.push(this.population[this.maxPop - j - 1]);
         }
         //}
