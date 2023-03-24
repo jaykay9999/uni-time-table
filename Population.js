@@ -23,7 +23,7 @@ class Population{
         this.maxPop = maxPop;
         this.bestDNA;
         this.generations = 0;
-        for (var i = 0; i < this.maxPop; i++) {
+        for (let i = 0; i < this.maxPop; i++) {
             this.population[i] = new DNA(allCourses , allProfessors);
         }
 
@@ -34,7 +34,7 @@ class Population{
 
 
     calcMaxFitness() {
-        for (var i = 0; i < this.maxPop; i++) {
+        for (let i = 0; i < this.maxPop; i++) {
             if (this.population[i].checkFit() > this.maxFitness) {
                 console.log(this.population[i].checkFit());
                 this.maxFitness = this.population[i].checkFit();
@@ -49,7 +49,7 @@ class Population{
 
     naturalSelection() {
         this.matingPool = [];
-        var maxFit = this.calcMaxFitness();
+        let maxFit = this.calcMaxFitness();
         this.population.sort(sortFunction1);
         //for (var i = 0; i < this.population.length; i++) {
         //var fitness = map(this.population[i].fitness, 0, maxFit, 0, 1);
@@ -62,12 +62,12 @@ class Population{
 
 
     generateGens(allCourses , allProfessors) {
-        for (var i = 0; i < this.population.length; i++) {
-            var indexA = randomIntFromInterval(0, this.matingPool.length -1);
-            var indexB = randomIntFromInterval(0, this.matingPool.length -1);
-            var a = this.matingPool[indexA];
-            var b = this.matingPool[indexB];
-            var child = a.crossover(b, allCourses , allProfessors);
+        for (let i = 0; i < this.population.length; i++) {
+            let indexA = randomIntFromInterval(0, this.matingPool.length -1);
+            let indexB = randomIntFromInterval(0, this.matingPool.length -1);
+            let a = this.matingPool[indexA];
+            let b = this.matingPool[indexB];
+            let child = a.crossover1(b, allCourses , allProfessors);
             child.mutate(this.mutRate);
             this.population[i] = child;
         }

@@ -2,7 +2,7 @@ const XLSX = require('xlsx');
 const fs = require('fs');
 
 // read Excel file as binary data
-const workbook = XLSX.read(fs.readFileSync('Genetic algorithm.xlsx'), { type: 'buffer' });
+const workbook = XLSX.read(fs.readFileSync('Genetic algorithm.xlsx'), {type: 'buffer' });
 
 // get the first worksheet
 const worksheet = workbook.Sheets[workbook.SheetNames[0]];
@@ -15,9 +15,7 @@ data.shift();
 
 console.log(data);
 
-function import_data(path){
 
-}
 
 function getUniqueNames(arr) {
     const uniqueNames = new Set();
@@ -28,6 +26,7 @@ function getUniqueNames(arr) {
     return Array.from(uniqueNames);
   }
   
+// Import the required modules
 
 
 //import DNA from './DNA';
@@ -75,7 +74,7 @@ var allCourses = [["asma" , "fresh1" , "math1",4], ["sami" , "fresh1" , "phy1",4
         ]
 var target;
 var maxPop;
-var mutRate = 0.001;
+var mutRate = 0.01;
 var finished = false;
 
 
@@ -101,14 +100,14 @@ console.log(allCourses);
 
 
 let population = new Population(allCourses, all_professors, mutRate , 1000);
-for (let i = 0 ; i < 10000 ; i++){
+for (let counter = 0 ; counter < 100 ; counter++){
     population.naturalSelection();
     population.generateGens(allCourses  , all_professors);
     population.calcMaxFitness();
 
 }
 
-for (var j = 0 ; j < population.population[999].genes.length ; j++){
+for (let j = 0 ; j < population.population[999].genes.length ; j++){
     console.log(population.population[999].genes[j])
 }
 console.log(population.generations)
