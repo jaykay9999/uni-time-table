@@ -36,7 +36,7 @@ class Population{
     calcMaxFitness() {
         for (let i = 0; i < this.maxPop; i++) {
             if (this.population[i].checkFit() > this.maxFitness) {
-                console.log(this.population[i].checkFit());
+                //console.log(this.population[i].checkFit());
                 this.maxFitness = this.population[i].checkFit();
                 //this.bestDNA = this.population[i].phenotype();
             }
@@ -54,7 +54,7 @@ class Population{
         //for (var i = 0; i < this.population.length; i++) {
         //var fitness = map(this.population[i].fitness, 0, maxFit, 0, 1);
         //var n = floor(fitness * 100);
-        for (var j = 0; j < 40; j++) {
+        for (var j = 0; j < 30; j++) {
             this.matingPool.push(this.population[this.maxPop - j - 1]);
         }
         //}
@@ -67,7 +67,7 @@ class Population{
             let indexB = randomIntFromInterval(0, this.matingPool.length -1);
             let a = this.matingPool[indexA];
             let b = this.matingPool[indexB];
-            let child = a.crossover1(b, allCourses , allProfessors);
+            let child = a.crossover4(b, allCourses , allProfessors);
             child.mutate(this.mutRate);
             this.population[i] = child;
         }
@@ -75,15 +75,6 @@ class Population{
 
     }
 
-
-    allPhrases() {
-        let everything = "";
-
-        for (let i = this.population.length - 1; i >= this.population.length - 50; i--) {
-        everything += this.population[i].phenotype() + "<br>";
-        }
-        return everything;
-    }
 }
 
 module.exports = {Population};

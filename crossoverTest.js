@@ -62,22 +62,23 @@ console.log(allCourses);
 
 let dna1 = new DNA(allCourses ,all_professors)
 console.log("DNA 1------------------------------------------")
-for (var i = 0 ; i< dna1.genes.length - 300 ;i++){
+for (var i = 0 ; i< dna1.genes.length - 580 ;i++){
     console.log(dna1.genes[i]);
 }
 console.log(dna1.checkFit());
 
 let dna2 = new DNA(allCourses ,all_professors)
 console.log("DNA 2 ----------------------------------------------------")
-for (var i = 0 ; i< dna2.genes.length - 300 ;i++){
+for (var i = 0 ; i< dna2.genes.length - 580 ;i++){
     console.log(dna2.genes[i]);
 }
 console.log(dna2.checkFit());
 
 
-dna3 = dna1.crossover(dna2 , allCourses, all_professors)
+dna3 = dna1.crossover1(dna2 , allCourses, all_professors)
 console.log("DNA 3 ----------------------------------------------------")
-for (var i = 0 ; i< dna3.genes.length - 300 ;i++){
+for (var i = 0 ; i< dna3.genes.length - 580 ;i++){
     console.log(dna3.genes[i]);
 }
 console.log(dna3.checkFit());
+console.log(dna1.genes.length);

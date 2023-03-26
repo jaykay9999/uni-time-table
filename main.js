@@ -74,7 +74,7 @@ var allCourses = [["asma" , "fresh1" , "math1",4], ["sami" , "fresh1" , "phy1",4
         ]
 var target;
 var maxPop;
-var mutRate = 0.01;
+var mutRate = 0.1;
 var finished = false;
 
 
@@ -91,8 +91,8 @@ for (var i = 0 ; i < allProfessorNames.length ; i++ ){
 
 
 
-all_professors[6].remove_time([22 , 32 , 33 , 44, 45])
-console.log(all_professors[6].getProfSlots())
+//all_professors[6].remove_time([22 , 32 , 33 , 44, 45])
+//console.log(all_professors[6].getProfSlots())
 
 
 
@@ -100,17 +100,18 @@ console.log(allCourses);
 
 
 let population = new Population(allCourses, all_professors, mutRate , 1000);
-for (let counter = 0 ; counter < 100 ; counter++){
+for (let counter = 0 ; counter < 200 ; counter++){
     population.naturalSelection();
     population.generateGens(allCourses  , all_professors);
     population.calcMaxFitness();
+    console.log(population.generations);
 
 }
 
 for (let j = 0 ; j < population.population[999].genes.length ; j++){
     console.log(population.population[999].genes[j])
 }
-console.log(population.generations)
+
 
 /*
 

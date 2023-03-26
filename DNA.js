@@ -1,4 +1,20 @@
 
+function isOverlapping(event1, event2) {
+    // If the events are not on the same day, there's no overlap
+    if (event1.day !== event2.day) {
+      return false;
+    }
+  
+    // Calculate the end times of both events
+    const event1EndTime = event1.startTime + event1.duration;
+    const event2EndTime = event2.startTime + event2.duration;
+  
+    // Check for overlap
+    return (
+      (event1.startTime >= event2.startTime && event1.startTime < event2EndTime) ||
+      (event2.startTime >= event1.startTime && event2.startTime < event1EndTime)
+    );
+  }
 
 function randomIntFromInterval(min, max) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min)
@@ -30,9 +46,13 @@ var allProfessorNames = ["asma" ,"sami", "firas", "lamjed", "mohammed", "samira"
 // all courses are in the form : professor A teaches class B course C , amount of hours per week X
 
 
-var availableSlots = [  211, 212, 221, 222, 231, 232, 241, 242, 251, 252, 261,  262, 271, 272, 281, 282, 291, 292, 311, 312, 321, 322,  331, 332, 341, 342, 351, 352, 361, 362, 371, 372, 381,  382, 391, 392, 411, 412, 421, 422, 431, 432, 441, 442,  451, 452, 461, 462, 471, 472, 481, 482, 491, 492, 511,  512, 521, 522, 531, 532, 541, 542, 551, 552, 561, 562,  571, 572, 581, 582, 591, 592, 611, 612, 621, 622, 631,  632, 641, 642, 651, 652, 661, 662, 671, 672, 681, 682,  691, 692]
+var availableSlots = [211, 212, 221, 222, 231, 232, 241, 242, 251, 252, 261,  262, 271, 272, 281, 282, 291, 292, 311, 312, 321, 322,  331, 332, 341, 342, 351, 352, 361, 362, 371, 372, 381,  382, 391, 392, 411, 412, 421, 422, 431, 432, 441, 442,  451, 452, 461, 462, 471, 472, 481, 482, 491, 492, 511,  512, 521, 522, 531, 532, 541, 542, 551, 552, 561, 562,  571, 572, 581, 582, 591, 592, 611, 612, 621, 622, 631,  632, 641, 642, 651, 652, 661, 662, 671, 672, 681, 682,  691, 692]
 
+var startTimes = [480, 510, 540, 570, 600, 630, 660, 690, 720, 750, 780, 810, 840, 870, 900, 930, 960, 990, 1020]
 
+var durations = [60 , 90 , 120]
+
+var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
 //this function will not be used anymore
 function newSession(oneCourse , professor) {
@@ -75,8 +95,10 @@ function new1Session(oneCourse , professor){
     let className = oneCourse[1]
     let courseName = oneCourse[2]
     let slotIndex = randomIntFromInterval(0, professor.getProfSlots().length -1  - courseCredit*2)
+    let randomDay = getRandomValueFromArray(days);
+    let randomStartTime = getRandomValueFromArray(startTimes);
     
-        session = [profName , className , courseCredit , courseName , professor.getProfSlots()[slotIndex]]
+        session = [profName , className , courseCredit , courseName ,{day: randomDay, startTime: randomStartTime, duration: courseCredit*60 }]
     
         return session;
     }
@@ -90,15 +112,19 @@ function new2Session(oneCourse , professor){
     let className = oneCourse[1]
     let courseName = oneCourse[2]
     let slotIndex = randomIntFromInterval(0, professor.getProfSlots().length -1  - courseCredit*2)
+    let randomDay = getRandomValueFromArray(days);
+    let randomStartTime = getRandomValueFromArray(startTimes);
+    let randomDay1 = getRandomValueFromArray(days);
+    let randomStartTime1 = getRandomValueFromArray(startTimes);
     
         if (courseCredit == 4 || courseCredit == 2 || courseCredit == 3){
 
-            session.push([profName , className , courseCredit/2 , courseName , professor.getProfSlots()[slotIndex]])
-            session.push([profName , className , courseCredit/2 , courseName , professor.getProfSlots()[slotIndex+1]])
+            session.push([profName , className , courseCredit/2 , courseName ,{day: randomDay, startTime: randomStartTime, duration: (courseCredit*60)/2 }])
+            session.push([profName , className , courseCredit/2 , courseName , {day: randomDay1, startTime: randomStartTime1, duration: (courseCredit*60)/2 }])
         }
         if (courseCredit == 2.5){
-            session.push([profName , className , 1.5 , courseName , professor.getProfSlots()[slotIndex]])
-            session.push([profName , className , 1 , courseName , professor.getProfSlots()[slotIndex+1]])
+            session.push([profName , className , 1.5 , courseName , {day: randomDay, startTime: randomStartTime, duration: 90 }])
+            session.push([profName , className , 1 , courseName ,{day: randomDay1, startTime: randomStartTime1, duration: 60}])
         }
 
         return session;
@@ -112,11 +138,17 @@ function new3Session(oneCourse , professor){
     let className = oneCourse[1]
     let courseName = oneCourse[2]
     let slotIndex = randomIntFromInterval(0, professor.getProfSlots().length -1 - courseCredit*2)
+    let randomDay = getRandomValueFromArray(days);
+    let randomStartTime = getRandomValueFromArray(startTimes);
+    let randomDay1 = getRandomValueFromArray(days);
+    let randomStartTime1 = getRandomValueFromArray(startTimes);
+    let randomDay2 = getRandomValueFromArray(days);
+    let randomStartTime2 = getRandomValueFromArray(startTimes);
     
 
-        session.push([profName , className , 2 , courseName , professor.getProfSlots()[slotIndex]])
-        session.push([profName , className , 2 , courseName , professor.getProfSlots()[slotIndex+1]])
-        session.push([profName , className , 1 , courseName , professor.getProfSlots()[slotIndex+2]])
+        session.push([profName , className , 2 , courseName , {day: randomDay, startTime: randomStartTime, duration: 120 }])
+        session.push([profName , className , 2 , courseName , {day: randomDay1, startTime: randomStartTime1, duration: 120 }])
+        session.push([profName , className , 1 , courseName , {day: randomDay2, startTime: randomStartTime2, duration: 60 }])
     
         return session;
     }
@@ -179,13 +211,16 @@ class DNA{
         let conflicts = 0;
         for (let i = 0 ; i < this.genes.length -1; i++){
             for(let j = i +1 ; j <this.genes.length ; j++){
-                //Same professor in two times
-                if (this.genes[i][0] == this.genes[j][0] && this.genes[i][4] == this.genes[j][4] ){
+                
+                let overlap = isOverlapping(this.genes[i][4] , this.genes[j][4])
+
+                //Same professor in same time
+                if (this.genes[i][0] == this.genes[j][0] && overlap == true ){
                     conflicts = conflicts + 1 
                 }
 
-                //Same class in two times
-                if (this.genes[i][1] == this.genes[j][1] && this.genes[i][4] == this.genes[j][4] ){
+                //Same class in same time
+                if (this.genes[i][1] == this.genes[j][1] && overlap == true ){
                     conflicts = conflicts + 1 
                 }
 
@@ -224,17 +259,17 @@ class DNA{
 
 
     // Crossover of two timetables using arithmetic crossover
-crossover2(partner , allCourses , allProfessors) {
-    var child = new DNA(allCourses , allProfessors);
-    for (var i = 0; i < this.genes.length; i++) {
-        // Generate a random alpha value between 0 and 1 for each gene position
-        var alpha = Math.random();
-        // Create a linear combination of the parents using the formula
-        var gene = alpha * this.genes[i] + (1 - alpha) * partner.genes[i];
-        child.genes[i] = gene;
+    crossover2(partner , allCourses , allProfessors) {
+        var child = new DNA(allCourses , allProfessors);
+        for (var i = 0; i < this.genes.length; i++) {
+            // Generate a random alpha value between 0 and 1 for each gene position
+            var alpha = Math.random();
+            // Create a linear combination of the parents using the formula
+            var gene = alpha * this.genes[i] + (1 - alpha) * partner.genes[i];
+            child.genes[i] = gene;
+        }
+        return child;
     }
-    return child;
-}
 
 //**************0.005208333333333333
 
@@ -287,8 +322,11 @@ crossover4(partner , allCourses , allProfessors) {
     mutate(mutRate){
         for(let i=0; i<this.genes.length; i++){
             if(Math.random(1) < mutRate){
-                let slotIndex1 = getRandomValueFromArray(availableSlots);
-                this.genes[i][4] =  slotIndex1  //availableSlots[slotIndex];
+                //let slotIndex1 = getRandomValueFromArray(availableSlots);
+                let randomDay = getRandomValueFromArray(days);
+                let randomStartTime = getRandomValueFromArray(startTimes);
+                this.genes[i][4].startTime =  randomStartTime //availableSlots[slotIndex];
+                this.genes[i][4].day = randomDay;
             }
         }
     }
