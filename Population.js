@@ -9,10 +9,15 @@ function sortFunction1(a, b) {
     }
 }
 
+
+//expalantion 2
 function randomIntFromInterval(min, max) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
 
+
+
+  //expalantion input 2 input 3
 class Population{
 
     constructor(allCourses, allProfessors, mutRate , maxPop){

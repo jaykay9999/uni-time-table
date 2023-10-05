@@ -66,11 +66,11 @@ var allCourses = [["asma" , "fresh1" , "math1",4], ["sami" , "fresh1" , "phy1",4
             ["john" , "junior2" , "math3",4], ["sami" , "junior2" , "phy3",4], ["kalixewi" , "junior2" , "eng3",4],
             ["dima" , "junior2" , "cs3",3], ["dima" , "junior2" , "iss3",3], ["samira" , "junior2" , "df3",3],
 
-            ["john" , "junior3" , "math3",4], ["john" , "junior3" , "phy3",4], ["kalixewi" , "junior3" , "eng3",4],
-            ["dima" , "junior3" , "cs3",3], ["mohammed" , "junior3" , "iss3",3], ["samira" , "junior3" , "df3",3],
+            ["john" , "junior7" , "math3",4], ["john" , "junior3" , "phy3",4], ["kalixewi" , "junior3" , "eng3",4],
+            ["dima" , "junior7" , "cs3",3], ["mohammed" , "junior3" , "iss3",3], ["samira" , "junior3" , "df3",3],
             
-            ["john" , "junior4" , "math3",4], ["kalixewi" , "junior4" , "phy3",4], ["kalixewi" , "junior4" , "eng3",4],
-            ["dima" , "junior4" , "cs3",3], ["dima" , "junior4" , "iss3",3], ["kalixewi" , "junior4" , "df3",3]
+            ["john" , "junior8" , "math3",4], ["kalixewi" , "junior4" , "phy3",4], ["kalixewi" , "junior4" , "eng3",4],
+            ["dima" , "junior8" , "cs3",3], ["dima" , "junior4" , "iss3",3], ["kalixewi" , "junior4" , "df3",3]
         ]
 var target;
 var maxPop;
