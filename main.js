@@ -74,7 +74,7 @@ var allCourses = [["asma" , "fresh1" , "math1",4], ["sami" , "fresh1" , "phy1",4
         ]
 var target;
 var maxPop;
-var mutRate = 0.1;
+var mutRate = 0.9;
 var finished = false;
 
 
