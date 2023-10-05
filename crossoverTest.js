@@ -34,6 +34,8 @@ const { Professor} = require('./Professor');
 
 allCourses = data;
 
+
+//explanation 1
 allProfessorNames =  getUniqueNames(allCourses);
 
 console.log(allProfessorNames);
@@ -44,7 +46,7 @@ for (var i = 0 ; i < allProfessorNames.length ; i++ ){
 }
 
 
-
+//explanation 2
 all_professors[6].remove_time([22 , 32 , 33 , 44, 45])
 console.log(all_professors[6].getProfSlots())
 
